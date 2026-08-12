@@ -1,0 +1,9 @@
+# Entorno virtual
+.venv/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+
+# Caché de Ruff
+.ruff_cache/
