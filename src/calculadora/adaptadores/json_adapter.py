@@ -74,9 +74,7 @@ class JSONAdapter:
             raise MatrizInvalidaError("'rows' y 'cols' deben ser mayores a cero")
 
         if not isinstance(data, list) or len(data) != rows:
-            raise MatrizInvalidaError(
-                f"'data' debe tener exactamente {rows} filas"
-            )
+            raise MatrizInvalidaError(f"'data' debe tener exactamente {rows} filas")
 
         for indice_fila, fila in enumerate(data):
             if not isinstance(fila, list) or len(fila) != cols:
