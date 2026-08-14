@@ -34,6 +34,29 @@ class JSONAdapter:
         self._validar_estructura(matriz)
         return matriz
 
+    def deserializar_entrada(self, texto_json: str) -> dict:
+        """Convierte el JSON de entrada en las matrices de la calculadora."""
+        try:
+            entrada = json.loads(texto_json)
+        except json.JSONDecodeError as error:
+            raise MatrizInvalidaError(f"El texto no es JSON válido: {error}") from error
+
+        if not isinstance(entrada, dict):
+            raise MatrizInvalidaError("La entrada debe ser un objeto JSON")
+
+        if "matrixA" not in entrada:
+            raise MatrizInvalidaError("La entrada debe contener 'matrixA'")
+
+        self._validar_estructura(entrada["matrixA"])
+
+        matrices = {"matrixA": entrada["matrixA"]}
+
+        if "matrixB" in entrada:
+            self._validar_estructura(entrada["matrixB"])
+            matrices["matrixB"] = entrada["matrixB"]
+
+        return matrices
+
     def serializar_resultado(self, resultado) -> str:
         """Convierte el resultado de una operación en un string JSON.
 
