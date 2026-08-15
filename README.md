@@ -1,4 +1,3 @@
-````markdown
 # Calculadora de matrices en Python
 
 Procesador mínimo para una calculadora de matrices en Python, con entrada JSON y operaciones de suma, multiplicación, determinante e inversa, desarrollado bajo una arquitectura Interfaz-Adaptador.
@@ -262,4 +261,3 @@ uv run ruff format --check .
 - **Profesor:** Luis Gerardo León Vega
 - **Institución:** Instituto Tecnológico de Costa Rica
 - **Periodo:** II semestre de 2026
-````
