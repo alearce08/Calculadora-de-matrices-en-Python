@@ -4,41 +4,47 @@ from calculadora.operacion import Operacion
 
 
 class Inversa(Operacion):
-    """Calcula la inversa de una matriz."""
+    """Calcula la inversa de dos matrices."""
 
     def __init__(self):
-        self.matrix = None
+        self.matrices = [None, None]
 
     def SetMatrix(self, index, matrix):
-        """Guarda la matriz que se va a utilizar."""
-        if index != 0:
-            raise IndexError("El índice debe ser 0")
+        """Guarda una de las matrices que se van a utilizar."""
+        if index not in (0, 1):
+            raise IndexError("El índice debe ser 0 o 1")
 
-        self.matrix = matrix
+        self.matrices[index] = matrix
 
     def Compute(self):
-        """Calcula y devuelve la matriz inversa."""
-        if self.matrix is None:
-            raise ValueError("Se necesita una matriz")
+        """Calcula y devuelve la inversa de las dos matrices."""
+        if any(matrix is None for matrix in self.matrices):
+            raise ValueError("Se necesitan dos matrices")
 
-        if self.matrix["rows"] != self.matrix["cols"]:
-            raise ValueError("La matriz debe ser cuadrada")
+        resultados = {}
+        nombres = ("matrixA", "matrixB")
 
-        data = np.array(self.matrix["data"], dtype=float)
-        determinant = np.linalg.det(data)
+        for nombre, matrix in zip(nombres, self.matrices):
+            if matrix["rows"] != matrix["cols"]:
+                raise ValueError(f"{nombre} debe ser cuadrada")
 
-        if np.isclose(determinant, 0):
-            raise ValueError("La matriz no tiene inversa")
+            data = np.array(matrix["data"], dtype=float)
+            determinant = np.linalg.det(data)
 
-        result = np.linalg.inv(data)
-        result = np.round(result, 10)
+            if np.isclose(determinant, 0):
+                raise ValueError(f"{nombre} no tiene inversa")
 
-        return {
-            "rows": self.matrix["rows"],
-            "cols": self.matrix["cols"],
-            "data": result.tolist(),
-        }
+            result = np.linalg.inv(data)
+            result = np.round(result, 10)
+
+            resultados[nombre] = {
+                "rows": matrix["rows"],
+                "cols": matrix["cols"],
+                "data": result.tolist(),
+            }
+
+        return resultados
 
     def Clear(self):
-        """Elimina la matriz guardada."""
-        self.matrix = None
+        """Elimina las matrices guardadas."""
+        self.matrices = [None, None]

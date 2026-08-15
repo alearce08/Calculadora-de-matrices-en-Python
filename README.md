@@ -4,11 +4,10 @@
 Procesador mínimo para una calculadora de matrices en Python, con entrada JSON y operaciones de suma, multiplicación, determinante e inversa, desarrollado bajo una arquitectura Interfaz-Adaptador.
 
 ## Funcionalidades
-
 - Suma de dos matrices.
 - Multiplicación de dos matrices.
-- Cálculo del determinante.
-- Cálculo de la matriz inversa.
+- Cálculo del determinante de dos matrices.
+- Cálculo de la inversa de dos matrices.
 - Lectura y validación de matrices en formato JSON.
 - Interfaz de línea de comandos desarrollada con Typer.
 - Presentación del resultado en formato JSON.
@@ -87,7 +86,7 @@ uv sync
 
 ## Formato de entrada
 
-La calculadora recibe la ruta de un archivo JSON. El archivo debe contener `matrixA` y, cuando la operación lo requiera, `matrixB`.
+La calculadora recibe la ruta de un archivo JSON. El archivo debe contener `matrixA` y `matrixB`
 
 Cada matriz debe incluir:
 
@@ -172,9 +171,10 @@ Resultado:
 }
 ```
 
+
 ### Determinante
 
-El determinante se calcula utilizando `matrixA`.
+El determinante se calcula para `matrixA` y `matrixB`.
 
 ```bash
 uv run calculadora determinante ejemplos/matrices.json
@@ -183,12 +183,15 @@ uv run calculadora determinante ejemplos/matrices.json
 Resultado:
 
 ```json
--2.0
+{
+  "matrixA": -2.0,
+  "matrixB": -2.0
+}
 ```
 
 ### Inversa
 
-La inversa se calcula utilizando `matrixA`.
+La inversa se calcula para `matrixA` y `matrixB`.
 
 ```bash
 uv run calculadora inversa ejemplos/matrices.json
@@ -198,27 +201,41 @@ Resultado:
 
 ```json
 {
-  "rows": 2,
-  "cols": 2,
-  "data": [
-    [-2.0, 1.0],
-    [1.5, -0.5]
-  ]
+  "matrixA": {
+    "rows": 2,
+    "cols": 2,
+    "data": [
+      [-2.0, 1.0],
+      [1.5, -0.5]
+    ]
+  },
+  "matrixB": {
+    "rows": 2,
+    "cols": 2,
+    "data": [
+      [-4.0, 3.0],
+      [3.5, -2.5]
+    ]
+  }
 }
 ```
+
 
 ## Validación y errores
 
 La calculadora verifica:
 
 - Que el archivo tenga un formato JSON válido.
-- Que exista `matrixA`.
-- Que suma y multiplicación también reciban `matrixB`.
+- Que existan `matrixA` y `matrixB`.
 - Que cada matriz contenga `rows`, `cols` y `data`.
 - Que las dimensiones declaradas coincidan con los datos.
 - Que los valores de las matrices sean numéricos.
 - Que la operación solicitada exista.
 - Que las dimensiones sean compatibles con la operación.
+- Que las matrices utilizadas para determinante e inversa sean cuadradas.
+- Que las matrices utilizadas para la inversa no sean singulares.
+```
+
 
 ## Revisión del código
 

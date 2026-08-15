@@ -33,12 +33,10 @@ def calcular(
         texto_json = archivo.read_text(encoding="utf-8")
         entrada = adaptador.deserializar_entrada(texto_json)
 
-        matrices = [entrada["matrixA"]]
+        if "matrixB" not in entrada:
+            raise MatrizInvalidaError("La entrada debe contener 'matrixA' y 'matrixB'")
 
-        if operacion in {"suma", "multiplicacion"}:
-            if "matrixB" not in entrada:
-                raise MatrizInvalidaError("La operación necesita 'matrixA' y 'matrixB'")
-            matrices.append(entrada["matrixB"])
+        matrices = [entrada["matrixA"], entrada["matrixB"]]
 
         resultado = aplicacion.ejecutar(operacion, matrices)
         typer.echo(adaptador.serializar_resultado(resultado))
