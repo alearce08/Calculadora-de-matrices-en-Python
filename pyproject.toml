@@ -1,10 +1,9 @@
 [project]
 name = "calculadora"
-version = "0.1.0"
+version = "1.0.0"
 description = "Calculadora de matrices con interfaz de línea de comandos y entrada JSON"
 authors = [
     { name = "Alejandro Arce" },
-    { name = "Steven Fonseca" },
     { name = "Brayan Solis" },
 ]
 requires-python = ">=3.12"
